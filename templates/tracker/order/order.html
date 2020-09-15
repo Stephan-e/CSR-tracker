@@ -1,0 +1,42 @@
+{% extends '_base.html' %}
+{% block title %}Order{% endblock title %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+        <h2><a>Orders</a></h2>
+    </div>
+    <div class="col-4">
+        <a class="mui-btn mui-btn--primary" href="{% url 'order_create' %}" role="button">Create Order</a>
+     </div>
+  </div>
+</div>
+<br/>
+
+<table class="mui-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Water Savings</th>
+      <th>CO2 Savings</th>
+      <th>Land Savings</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for order in order_list %}
+    <tr>
+      <td><a href="{{ order.get_absolute_url }}">{{ order.name }}</a></td>
+      <td><a >{{ order.date }}</a></td>
+      <td>{{ order.metrics.water_saved }}</td>
+      <td>{{ order.metrics.water_saved }}</td>
+      <td>{{ order.metrics.water_saved }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock content %}

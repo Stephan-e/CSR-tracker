@@ -1,0 +1,25 @@
+{% extends '_base.html' %}
+{% block title %}{{ ingredient.name }}{% endblock title %}
+{% block content %}
+<div class="ingredient-detail">
+<h2><a href="">{{ ingredient.title }}</a></h2>
+<h2> Ingredient</h2>
+
+<p>{{ ingredient.name }}</p>
+<p>{{ ingredient.description }}</p>
+<p>{{ ingredient.category }}</p>
+<br/>
+
+<p>Water Use: {{ ingredient.water }} liters</p>
+<p>CO2 Use: {{ ingredient.carbondioxide }} kg</p>
+<p>land Use: {{ ingredient.land }} m2</p>
+<br/>
+
+        <a class="mui-btn mui-btn--primary" href="{% url 'ingredient_update' ingredient.id%}"  >Edit</a>
+        <a class="mui-btn mui-btn--primary" href="{% url 'ingredient_delete' ingredient.id%}"  >Delete</a>
+
+<a class="mui-btn mui-btn--primary" href="{{request.META.HTTP_REFERER}}" >Back</a>
+
+</div>
+
+{% endblock content %}

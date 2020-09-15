@@ -1,0 +1,60 @@
+<link href="//cdn.muicss.com/mui-0.10.3/css/mui.min.css" rel="stylesheet" type="text/css" />
+<script src="//cdn.muicss.com/mui-0.10.3/js/mui.min.js"></script>
+
+{% load mathfilters %}
+{% block content %}
+<h2> CSR Metrics Report </h2>
+<div class="order-detail">
+<div class="container">
+  <div class="row">
+    <div class="col-10">
+        <h2>{{ order.name }}</h2>
+        <p>Company: {{ order.company.name }}</p>
+        <p>{{ order.date }}</p>
+    </div>
+    
+</div>
+</div>
+
+
+<br/>
+
+<p>Water Saved: {{ order.metrics.water_saved }} liters</p>
+<p>Co2 Saved: {{ order.metrics.carbondioxide_saved }} kg</p>
+<p>Land Saved: {{ order.metrics.land_saved }} square meters</p>
+<br/>
+
+<br/><br/>
+
+<p>Order Items:</p>
+
+<table class="mui-table mui-table--bordered">
+  <thead>
+    <tr>
+      <th>Recipe</th>
+      <th>Quantity</th>
+      <th>Water Saved</th>
+      <th>Co2 Saved</th>
+      <th>Land Saved</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in orders %}
+    <tr>
+      <td>{{ item.recipe.name }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ item.recipe.water_use|sub:item.recipe.water_use_veg|mul:item.quantity }}</td>
+      <td>{{ item.recipe.carbondioxide_use|sub:item.recipe.carbondioxide_use_veg|mul:item.quantity }}</td>
+      <td>{{ item.recipe.land_use|sub:item.recipe.land_use_veg|mul:item.quantity }}</td>
+
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+<br/>
+
+
+
+</div>
+
+{% endblock content %}

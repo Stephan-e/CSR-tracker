@@ -1,0 +1,24 @@
+{% extends '_base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+        <h2><a>Create Order</a></h2>
+    </div>
+    <div class="col-4">
+        <a class="mui-btn mui-btn--primary" href="{{request.META.HTTP_REFERER}}" >Back</a>
+     </div>
+  </div>
+</div>
+<br/>
+
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="mui-btn mui-btn--primary">Create</button>
+  </form>
+{% endblock %}

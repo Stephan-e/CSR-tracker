@@ -1,0 +1,125 @@
+{% extends '_base.html' %}
+{% load mathfilters %}
+
+{% block title %}{{ recipe.name }}{% endblock title %}
+{% block content %}
+
+<div class="recipe-detail">
+
+<h2> Recipe</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-10">
+        <h3>{{ recipe.name }}</h3>
+        <h4>{{ recipe.description }}</h4>   
+    <a class="mui-btn mui-btn--primary" href="{% url 'recipe_update' recipe.id %}" role="button">Edit</a>
+    <a class="mui-btn mui-btn--primary" href="{% url 'recipe_delete' recipe.id%}"  >Delete</a>
+
+    </div>
+    <div class="col-2">
+        <a class="mui-btn mui-btn--primary" href="{{request.META.HTTP_REFERER}}" >Back</a>
+     </div>
+  </div>
+</div>
+<br/>
+
+
+<table class="mui-table ">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Animal Based</th>
+      <th>Plant Based</th>
+      <th>Savings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Total Water Use</td>
+      <td>{{ recipe.water_use }}</td>
+      <td>{{ recipe.water_use_veg }}</td>
+      <td>{{ recipe.water_use|sub:recipe.water_use_veg }}</td>
+    </tr>
+    <tr>
+      <td>Total CO2 Use</td>
+      <td>{{ recipe.carbondioxide_use }}</td>
+      <td>{{ recipe.carbondioxide_use_veg }}</td>
+    <td>{{ recipe.carbondioxide_use|sub:recipe.carbondioxide_use_veg }}</td>
+
+    </tr>
+     <tr>
+      <td>Total Land Use</td>
+      <td>{{ recipe.land_use }}</td>
+      <td>{{ recipe.land_use_veg }}</td>
+        <td>{{ recipe.land_use|sub:recipe.land_use_veg }}</td>
+
+    </tr>
+  </tbody>
+</table>
+
+<br/>
+<a class="mui-btn mui-btn--primary"  href="{% url 'ingredient_add' recipe.id %}" role="button">Add Animal Based Ingredient</a>
+<a class="mui-btn mui-btn--primary"  href="{% url 'veg_ingredient_add' recipe.id %}" role="button">Add Plant Based Ingredient</a>
+<br/><br/>
+
+<p>Animal Based Ingredients:</p>
+
+<table class="mui-table mui-table--bordered">
+  <thead>
+    <tr>
+      <th>Ingredient</th>
+      <th>Amount</th>
+      <th>Water l</th>
+      <th>Co2 kg</th>
+      <th>Landmass m2</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for ingredient in ingredients %}
+    <tr>
+      <td>{{ ingredient.ingredient.name }}</td>
+      <td>{{ ingredient.amount }}</td>
+      <td>{% widthratio ingredient.ingredient.water 1 ingredient.amount %}</td>
+      <td>{% widthratio ingredient.ingredient.carbondioxide 1 ingredient.amount %}</td>
+      <td>{% widthratio ingredient.ingredient.land 1 ingredient.amount %}</td>
+      <td><a class="mui-btn mui-btn--primary" href="{% url 'ingredient_remove' ingredient.id %}?recipe={{recipe.id}}" role="button">Remove</a></td>
+
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+<br/>
+
+<p>Plant Based Ingredients:</p>
+
+<table class="mui-table mui-table--bordered">
+  <thead>
+    <tr>
+      <th>Ingredient</th>
+      <th>Amount</th>
+      <th>Water l</th>
+      <th>Co2 kg</th>
+      <th>Landmass m2</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for ingredient in veg_ingredients %}
+    <tr>
+      <td>{{ ingredient.ingredient.name }}</td>
+      <td>{{ ingredient.amount }}</td>
+      <td>{% widthratio ingredient.ingredient.water 1 ingredient.amount %}</td>
+      <td>{% widthratio ingredient.ingredient.carbondioxide 1 ingredient.amount %}</td>
+      <td>{% widthratio ingredient.ingredient.land 1 ingredient.amount %}</td>
+     <td><a class="mui-btn mui-btn--primary" href="{% url 'veg_ingredient_remove' ingredient.id %}?recipe={{recipe.id}}" role="button">Remove</a></td>
+
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+
+
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,41 @@
+{% extends '_base.html' %}
+{% block title %}Company{% endblock title %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+        <h2><a>Companies</a></h2>
+    </div>
+    <div class="col-4">
+        <a class="mui-btn mui-btn--primary" href="{% url 'company_create' %}" role="button">Add Company</a>
+     </div>
+  </div>
+</div>
+<br/>
+
+<table class="mui-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Water Savings</th>
+      <th>CO2 Savings</th>
+      <th>Land Savings</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for company in company_list %}
+    <tr>
+      <td><a href="{{ company.get_absolute_url }}">{{ company.name }}</a></td>
+      <td><a >{{ company.description }}</a></td>
+      <td>{{ company.water_saved }}</td>
+      <td>{{ company.carbondioxide_saved }}</td>
+      <td>{{ company.land_saved }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}

@@ -1,0 +1,45 @@
+{% extends '_base.html' %}
+{% load mathfilters %}
+
+{% block title %}Recipe{% endblock title %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+        <h2><a>Recipes</a></h2>
+    </div>
+    <div class="col-4">
+        <a class="mui-btn mui-btn--primary" href="{% url 'recipe_create' %}" role="button">Add Recipe</a>
+
+     </div>
+  </div>
+</div>
+<br/>
+
+<table class="mui-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Water Savings</th>
+      <th>CO2 Savings</th>
+      <th>Land Savings</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for recipe in recipe_list %}
+    <tr>
+      <td><a href="{{ recipe.get_absolute_url }}">{{ recipe.name }}</a></td>
+      <td><a >{{ recipe.description }}</a></td>
+      <td>{{ recipe.water_use|sub:recipe.water_use_veg }}</td>
+      <td>{{ recipe.carbondioxide_use|sub:recipe.carbondioxide_use_veg }}</td>
+      <td>{{ recipe.land_use|sub:recipe.land_use_veg }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock content %}

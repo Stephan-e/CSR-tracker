@@ -1,0 +1,64 @@
+{% extends '_base.html' %}
+{% block title %}{{ company.name }}{% endblock title %}
+{% block content %}
+<div class="company-detail">
+<h2><a href="">{{ company.title }}</a></h2>
+<h2> Company</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-10">
+        <h3> {{ company.name }}</h3>
+        <h4>{{ company.description }}</h4>
+        <a class="mui-btn mui-btn--primary" href="{% url 'company_update' company.id%}"  >Edit</a>
+        <a class="mui-btn mui-btn--primary" href="{% url 'company_delete' company.id%}"  >Delete</a>
+
+
+    </div>
+    <div class="col-2">
+       <a class="mui-btn mui-btn--primary" href="{{request.META.HTTP_REFERER}}" >Back</a>
+    </div>
+  </div>
+</div>
+<br/>
+<br/>
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+        <h2><a>Orders</a></h2>
+    </div>
+    <div class="col-4">
+        <a class="mui-btn mui-btn--primary" href="{% url 'order_create' %}" role="button">Create Order</a>
+     </div>
+  </div>
+</div>
+<br/>
+
+<table class="mui-table mui-table--bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Water Saved</th>
+      <th>Co2 Saved</th>
+      <th>Land Saved</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for order in orders %}
+    <tr>
+      <td><a href="{% url 'order_detail' order.id %}">{{ order.name }}</a></td>
+      <td>{{ order.date }}</td>
+      <td>{{ order.metrics.water_saved }}</td>
+      <td>{{ order.metrics.carbondioxide_saved }}</td>
+      <td>{{ order.metrics.land_saved }}</td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+<br/>
+
+
+</div>
+
+{% endblock content %}

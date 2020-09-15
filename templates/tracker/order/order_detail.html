@@ -1,0 +1,67 @@
+{% extends '_base.html' %}
+{% load mathfilters %}
+{% block title %}{{ order.name }}{% endblock title %}
+{% block content %}
+<h2> Order</h2>
+<div class="order-detail">
+<div class="container">
+  <div class="row">
+    <div class="col-10">
+        <h2><a href="">{{ order.name }}</a></h2>
+        <p>Company: <a href="{% url 'company_detail' order.company.id %}">{{ order.company.name }}</a></p>
+        <p>{{ order.date }}</p>
+        <a class="mui-btn mui-btn--primary" href="{% url 'order_update' order.id %}" role="button">Edit</a>
+        <a class="mui-btn mui-btn--primary" href="{% url 'order_delete' order.id %}" role="button">Delete</a>
+        <a class="mui-btn mui-btn--primary" href="{% url 'order_report' order.id %}" role="button">Report</a>
+
+    </div>
+     <div class="col-2">
+        <a class="mui-btn mui-btn--primary" href="{{request.META.HTTP_REFERER}}" >Back</a>
+    </div>
+</div>
+</div>
+
+
+<br/>
+
+<p>Water Saved: {{ order.metrics.water_saved }} liters</p>
+<p>Co2 Saved: {{ order.metrics.carbondioxide_saved }} kg</p>
+<p>Land Saved: {{ order.metrics.land_saved }} square meters</p>
+<br/>
+
+<a class="mui-btn mui-btn--primary" href="{% url 'item_add' order.id %}" role="button">Add Item</a>
+<br/><br/>
+
+<p>Order Items:</p>
+
+<table class="mui-table mui-table--bordered">
+  <thead>
+    <tr>
+      <th>Recipe</th>
+      <th>Quantity</th>
+      <th>Water Saved</th>
+      <th>Co2 Saved</th>
+      <th>Land Saved</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in orders %}
+    <tr>
+      <td><a href="{% url 'recipe_detail' item.recipe.id %}">{{ item.recipe.name }}</a></td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ item.recipe.water_use|sub:item.recipe.water_use_veg|mul:item.quantity }}</td>
+      <td>{{ item.recipe.carbondioxide_use|sub:item.recipe.carbondioxide_use_veg|mul:item.quantity }}</td>
+      <td>{{ item.recipe.land_use|sub:item.recipe.land_use_veg|mul:item.quantity }}</td>
+      <td><a class="mui-btn mui-btn--primary" href="{% url 'item_remove' item.id %}?order={{order.id}}" role="button">Remove Item</a></td>
+
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+<br/>
+
+
+
+</div>
+
+{% endblock content %}

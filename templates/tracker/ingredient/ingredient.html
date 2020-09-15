@@ -1,0 +1,44 @@
+{% extends '_base.html' %}
+{% block title %}Ingredient{% endblock title %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+        <h2><a>Ingredients</a></h2>
+    </div>
+    <div class="col-4">
+        <a class="mui-btn mui-btn--primary" href="{% url 'ingredient_create' %}" role="button">Add Ingredient</a>
+     </div>
+  </div>
+</div>
+<br/>
+
+
+
+<table class="mui-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Water Use</th>
+      <th>CO2 Use</th>
+      <th>Land Use</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for ingredient in ingredient_list %}
+    <tr>
+      <td><a href="{{ ingredient.get_absolute_url }}">{{ ingredient.name }}</a></td>
+      <td><a >{{ ingredient.description }}</a></td>
+      <td><a >{{ ingredient.category }}</a></td>
+      <td>{{ ingredient.water }}</td>
+      <td>{{ ingredient.carbondioxide }}</td>
+      <td>{{ ingredient.land }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}
