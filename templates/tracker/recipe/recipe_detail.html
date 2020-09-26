@@ -80,9 +80,6 @@
     <tr>
       <td>{{ ingredient.ingredient.name }}</td>
       <td>{{ ingredient.amount }}</td>
-      {% comment %} <td>{% widthratio ingredient.ingredient.water 1 ingredient.amount %}</td>
-      <td>{% widthratio ingredient.ingredient.carbondioxide 1 ingredient.amount %}</td>
-      <td>{% widthratio ingredient.ingredient.land 1 ingredient.amount %}</td> {% endcomment %}
       <td>{{ ingredient.ingredient.water|mul:ingredient.amount }}</td>
       <td>{{ ingredient.ingredient.carbondioxide|mul:ingredient.amount }}</td>
       <td>{{ ingredient.ingredient.land|mul:ingredient.amount }}</td>
@@ -112,9 +109,9 @@
     <tr>
       <td>{{ ingredient.ingredient.name }}</td>
       <td>{{ ingredient.amount }}</td>
-      <td>{% widthratio ingredient.ingredient.water 1 ingredient.amount %}</td>
-      <td>{% widthratio ingredient.ingredient.carbondioxide 1 ingredient.amount %}</td>
-      <td>{% widthratio ingredient.ingredient.land 1 ingredient.amount %}</td>
+      <td>{{ ingredient.ingredient.water|mul:ingredient.amount }}</td>
+      <td>{{ ingredient.ingredient.carbondioxide|mul:ingredient.amount }}</td>
+      <td>{{ ingredient.ingredient.land|mul:ingredient.amount }}</td>
      <td><a class="mui-btn mui-btn--primary" href="{% url 'veg_ingredient_remove' ingredient.id %}?recipe={{recipe.id}}" role="button">Remove</a></td>
 
     </tr>
