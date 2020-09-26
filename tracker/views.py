@@ -12,6 +12,7 @@ from django.conf import settings
 
 from django_weasyprint import WeasyTemplateResponseMixin, WeasyTemplateResponse
 from django_weasyprint.views import CONTENT_TYPE_PNG
+from django.db.models import Sum, F, DecimalField
 
 
 
@@ -164,7 +165,7 @@ class RecipeCreateView(CreateView):
     def form_valid(self, form):   
         response = super(RecipeCreateView, self).form_valid(form)
         return response
-
+    
 class RecipeUpdateView(UpdateView):
     model = Recipe
     context_object_name = 'recipe_update'
@@ -182,8 +183,36 @@ class RecipeDetailView(DetailView):
         except Recipe.DoesNotExist():
             raise ValueError
         context = super(RecipeDetailView, self).get_context_data(**kwargs)
-        context['ingredients'] = IngredientAmount.objects.filter(recipe=recipe)
-        context['veg_ingredients'] = VegIngredientAmount.objects.filter(recipe=recipe)
+        ingredients = IngredientAmount.objects.filter(recipe=recipe)
+        context['ingredients'] = ingredients
+        context['ingredients_water'] = ingredients.aggregate(
+            total=Sum(F('amount') * F('ingredient__water'),
+            output_field=DecimalField()))['total']
+
+        context['ingredients_carbondioxide'] = ingredients.aggregate(
+            total=Sum(F('amount') * F('ingredient__carbondioxide'),
+            output_field=DecimalField()))['total']
+
+        context['ingredients_land'] = ingredients.aggregate(
+            total=Sum(F('amount') * F('ingredient__land'),
+            output_field=DecimalField()))['total']
+
+        veg_ingredients = VegIngredientAmount.objects.filter(recipe=recipe)
+        context['veg_ingredients'] = veg_ingredients
+
+        context['ingredients_water_veg'] = veg_ingredients.aggregate(
+            total=Sum(F('amount') * F('ingredient__water'),
+            output_field=DecimalField()))['total']
+
+        context['ingredients_carbondioxide_veg'] = veg_ingredients.aggregate(
+            total=Sum(F('amount') * F('ingredient__carbondioxide'),
+            output_field=DecimalField()))['total']
+
+        context['ingredients_land_veg'] = veg_ingredients.aggregate(
+            total=Sum(F('amount') * F('ingredient__land'),
+            output_field=DecimalField()))['total']
+
+
         return context
 
 class RecipeDeleteView(DeleteView):

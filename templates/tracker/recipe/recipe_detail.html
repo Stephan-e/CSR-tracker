@@ -37,22 +37,22 @@
   <tbody>
     <tr>
       <td>Total Water Use</td>
-      <td>{{ recipe.water_use }}</td>
-      <td>{{ recipe.water_use_veg }}</td>
-      <td>{{ recipe.water_use|sub:recipe.water_use_veg }}</td>
+      <td>{{ ingredients_water }}</td>
+      <td>{{ ingredients_water_veg }}</td>
+      <td>{{ ingredients_water|sub:ingredients_water_veg }}</td>
     </tr>
     <tr>
       <td>Total CO2 Use</td>
-      <td>{{ recipe.carbondioxide_use }}</td>
-      <td>{{ recipe.carbondioxide_use_veg }}</td>
-    <td>{{ recipe.carbondioxide_use|sub:recipe.carbondioxide_use_veg }}</td>
+      <td>{{ ingredients_carbondioxide }}</td>
+      <td>{{ ingredients_carbondioxide_veg }}</td>
+      <td>{{ ingredients_carbondioxide|sub:ingredients_carbondioxide_veg }}</td>
 
     </tr>
      <tr>
       <td>Total Land Use</td>
-      <td>{{ recipe.land_use }}</td>
-      <td>{{ recipe.land_use_veg }}</td>
-        <td>{{ recipe.land_use|sub:recipe.land_use_veg }}</td>
+      <td>{{ ingredients_land }}</td>
+      <td>{{ ingredients_land_veg }}</td>
+        <td>{{ ingredients_land|sub:ingredients_land_veg }}</td>
 
     </tr>
   </tbody>
