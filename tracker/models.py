@@ -97,8 +97,8 @@ class VegIngredientAmount(DateModel):
 
 
 class BaseIngredientAmount(DateModel):
-    ingredient = models.ForeignKey('Ingredient', related_name='veg_ingredient_amount', on_delete=models.SET_NULL, null=True, blank=True)
-    recipe = models.ForeignKey('Recipe', related_name='veg_ingredient_amount', on_delete=models.SET_NULL, null=True, blank=True)
+    ingredient = models.ForeignKey('Ingredient', related_name='base_ingredient_amount', on_delete=models.SET_NULL, null=True, blank=True)
+    recipe = models.ForeignKey('Recipe', related_name='base_ingredient_amount', on_delete=models.SET_NULL, null=True, blank=True)
     amount = models.IntegerField(default = 0)
 
     def delete(self, *args, **kwargs):
