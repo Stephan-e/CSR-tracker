@@ -221,7 +221,7 @@ class RecipeDetailView(DetailView):
         recipe.water_use_veg= context['ingredients_water_veg']
         recipe.carbondioxide_use_veg=context['ingredients_carbondioxide_veg']
         recipe.land_use_veg=context['ingredients_land_veg']
-
+        recipe.save()
 
         return context
 
