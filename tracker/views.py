@@ -156,6 +156,8 @@ class RecipeListView(ListView):
     context_object_name = 'recipe_list'
     template_name = 'tracker/recipe/recipe.html'
 
+
+
 class RecipeCreateView(CreateView):
     model = Recipe
     context_object_name = 'recipe_create'
@@ -197,6 +199,10 @@ class RecipeDetailView(DetailView):
             total=Sum(F('amount') * F('ingredient__land'),
             output_field=DecimalField()))['total']
 
+        recipe.water_use=context['ingredients_water']
+        recipe.carbondioxide_use=context['ingredients_carbondioxide']
+        recipe.land_use=context['ingredients_land']
+
         veg_ingredients = VegIngredientAmount.objects.filter(recipe=recipe)
         context['veg_ingredients'] = veg_ingredients
 
@@ -211,6 +217,10 @@ class RecipeDetailView(DetailView):
         context['ingredients_land_veg'] = veg_ingredients.aggregate(
             total=Sum(F('amount') * F('ingredient__land'),
             output_field=DecimalField()))['total']
+
+        recipe.water_use_veg= context['ingredients_water_veg']
+        recipe.carbondioxide_use_veg=context['ingredients_carbondioxide_veg']
+        recipe.land_use_veg=context['ingredients_land_veg']
 
 
         return context

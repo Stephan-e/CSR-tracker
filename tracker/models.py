@@ -96,6 +96,25 @@ class VegIngredientAmount(DateModel):
         return self.ingredient.name +' x '+ str(self.amount)
 
 
+class BaseIngredientAmount(DateModel):
+    ingredient = models.ForeignKey('Ingredient', related_name='veg_ingredient_amount', on_delete=models.SET_NULL, null=True, blank=True)
+    recipe = models.ForeignKey('Recipe', related_name='veg_ingredient_amount', on_delete=models.SET_NULL, null=True, blank=True)
+    amount = models.IntegerField(default = 0)
+
+    def delete(self, *args, **kwargs):
+        self.recipe.water_use_veg -= self.ingredient.water*self.amount
+        self.recipe.carbondioxide_use_veg -= self.ingredient.carbondioxide*self.amount
+        self.recipe.land_use_veg -= self.ingredient.land*self.amount
+        self.recipe.save()
+        super(VegIngredientAmount, self).delete(*args, **kwargs)
+    
+    def get_absolute_url(self): 
+        return reverse('veg_ingredient_item_detail', args=[str(self)])
+
+    def __str__(self):
+        return self.ingredient.name +' x '+ str(self.amount)
+
+
 class Recipe(DateModel):
     id = models.UUIDField(
         primary_key=True,
